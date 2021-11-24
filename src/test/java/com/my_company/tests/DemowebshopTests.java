@@ -1,21 +1,25 @@
-package com.my_company;
+package com.my_company.tests;
 
 import com.codeborne.selenide.Condition;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.my_company.filters.CustomLogFilter.customLogFilter;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
 public class DemowebshopTests {
     @Test
+    @DisplayName("Add to Cart")
     void addToCartTest() {
         Response response =
                 given()
+                        .filter(customLogFilter().withCustomTemplates())
                         .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                         .body("product_attribute_72_5_18=53&product_attribute_72_6_19=54&product_attribute_72_3_20=57&addtocart_72.EnteredQuantity=1")
                         .when()
@@ -31,9 +35,11 @@ public class DemowebshopTests {
     }
 
     @Test
+    @DisplayName("Add to cart with Cookie")
     void addToCartWithCookieTest() {
         Response response =
                 given()
+                        .filter(customLogFilter().withCustomTemplates())
                         .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                         .body("product_attribute_72_5_18=53&product_attribute_72_6_19=54&product_attribute_72_3_20=57&addtocart_72.EnteredQuantity=1")
                         .cookie("Nop.customer=957e0607-7b6f-4e93-8308-32ac30a6677c;")
@@ -51,10 +57,12 @@ public class DemowebshopTests {
 
     //test for homework
     @Test
+    @DisplayName("Add to Cart with API and UI")
     void addProductToCardApiAndUI() {
         // Add product to cart by API
         Response response =
                 given()
+                        .filter(customLogFilter().withCustomTemplates())
                         .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                         .cookie("Nop.customer=957e0607-7b6f-4e93-8308-32ac30a6677c;")
                         .when()
